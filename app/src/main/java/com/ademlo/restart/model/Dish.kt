@@ -1,5 +1,7 @@
 package com.ademlo.restart.model
 
-class Dish(name: String, ingredients: String, price: Float){
+import android.media.Image
+
+data class Dish(val name: String,val description: String,val ingredients: String,val price: Float,val images: Int){
 
 }

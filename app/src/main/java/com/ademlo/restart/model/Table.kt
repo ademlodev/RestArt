@@ -1,5 +1,5 @@
 package com.ademlo.restart.model
 
-class Table(name: String){
-
+data class Table(var name: String){
+    override fun toString() = name
 }

@@ -1,13 +1,12 @@
-package com.ademlo.restart.activity
+package com.ademlo.restart
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.ademlo.restart.R
 
-class MesasListActivity : AppCompatActivity() {
+class PlatoDetalleActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_mesas_list)
+        setContentView(R.layout.activity_plato_detalle)
     }
 }
