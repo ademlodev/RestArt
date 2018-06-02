@@ -16,9 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PlatoDetalleActivity">
-
-        </activity>
+        <activity android:name=".activity.PlatoDetalleActivity" />
+        <activity android:name=".activity.OrdersListActivity"/>
     </application>
 
 </manifest>
