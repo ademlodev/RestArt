@@ -23,7 +23,7 @@ class TablesListActivity : AppCompatActivity() {
 
     val tableAdapter: TableAdapter by lazy {
         val adapter = TableAdapter{ item, position ->
-            showOrderList(position)
+            showOrderList(item.id)
         }
         adapter
     }
@@ -39,7 +39,7 @@ class TablesListActivity : AppCompatActivity() {
 
     }
 
-    fun showOrderList(tableId: Int){
+    fun showOrderList(tableId: String){
         val intent: Intent  = Intent(this,OrdersListActivity::class.java)
         intent.putExtra(EXTRA_TABLE_INDEX,tableId)
         startActivity(intent)

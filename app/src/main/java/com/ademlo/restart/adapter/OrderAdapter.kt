@@ -8,9 +8,18 @@ import android.widget.TextView
 import com.ademlo.restart.R
 import com.ademlo.restart.model.Dish
 
-class OrderAdapter: RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
+class OrderAdapter: RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
+
+    constructor(): super(){
+        itemClickListener = null
+    }
+
+    constructor(itemClickListener: ((Dish, Int) -> Unit)): super(){
+        this.itemClickListener = itemClickListener
+    }
 
     private var items = mutableListOf<Dish>()
+    private val itemClickListener: ((Dish, Int) -> Unit)?
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder{
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_order,parent,false)
@@ -39,5 +48,13 @@ class OrderAdapter: RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
 
                 field = value
             }
+
+        init {
+            itemView.setOnClickListener {
+                order?.let {
+                    itemClickListener?.invoke(order as Dish,adapterPosition)
+                }
+            }
+        }
     }
 }
