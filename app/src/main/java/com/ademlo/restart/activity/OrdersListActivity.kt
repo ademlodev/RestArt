@@ -87,10 +87,10 @@ class OrdersListActivity : AppCompatActivity() {
                         }
                         orderAdapter.notifyDataSetChanged()
                     }
-                    //TODO Meter SnackBar para poder deshacer
+                    //TODO Meter SnackBar informativo y para poder deshacer
                 }
                 else {
-                    //TODO No se ha seleccionado nada.
+                    //TODO No se ha seleccionado nada. Insertar mensaje Toast?
                 }
             }
         }
@@ -104,7 +104,7 @@ class OrdersListActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId){
             R.id.calculate_bill -> {
-                //TODO Calcular el precio de la mesa y mostrarlo en un alert
+
                 var bill: Float = 0f
                 orders?.let {
                     val iterate = orders!!.listIterator()
@@ -116,7 +116,7 @@ class OrdersListActivity : AppCompatActivity() {
 
                 AlertDialog.Builder(this)
                         .setTitle("La cuenta")
-                        .setMessage("El total de la mesa es: " + bill)
+                        .setMessage("El total de la mesa es: " + bill + " €")
                         .setPositiveButton(android.R.string.ok,null)
                         .show()
                 return true
