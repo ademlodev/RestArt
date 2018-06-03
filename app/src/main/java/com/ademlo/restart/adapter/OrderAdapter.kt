@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.ademlo.restart.R
 import com.ademlo.restart.model.Dish
-import com.ademlo.restart.model.Table
 
 class OrderAdapter(private var items : MutableList<Dish>): RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
 
@@ -26,16 +25,6 @@ class OrderAdapter(private var items : MutableList<Dish>): RecyclerView.Adapter<
     override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
         holder.bindOrder(items[position])
     }
-
-    /* En landscape no he averiguado como actualizar la lista de la derecha
-    fun setOrders(orders: List<Dish>?){
-        if (orders != null) {
-            items.clear()
-            items.addAll(orders)
-        }else
-            items.clear()
-        notifyDataSetChanged()
-    }*/
 
     inner class OrderViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         var nameOrderText = itemView.findViewById<TextView>(R.id.label_order_name)

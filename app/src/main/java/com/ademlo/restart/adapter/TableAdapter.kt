@@ -4,11 +4,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.TextView
 import com.ademlo.restart.R
 import com.ademlo.restart.model.Table
-import kotlinx.android.synthetic.main.activity_tables_list.view.*
 
 class TableAdapter(private var items : List<Table>): RecyclerView.Adapter<TableAdapter.TableViewHolder>() {
 

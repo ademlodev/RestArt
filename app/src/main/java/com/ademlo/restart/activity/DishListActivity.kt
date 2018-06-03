@@ -13,7 +13,6 @@ import com.ademlo.restart.adapter.DishAdapter
 class DishListActivity : AppCompatActivity() {
 
     companion object {
-
         val EXTRA_DISH_ID = "EXTRA_DISH_ID"
 
         fun intent(context: Context) = Intent(context, DishListActivity::class.java)
@@ -22,7 +21,6 @@ class DishListActivity : AppCompatActivity() {
     val dishList: RecyclerView by lazy {
         val list: RecyclerView = findViewById(R.id.dish_list)
         list.layoutManager = LinearLayoutManager(this)
-
         list
     }
 
@@ -43,7 +41,5 @@ class DishListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_dish_list)
 
         dishList.adapter = dishAdapter
-
-
     }
 }

@@ -44,7 +44,6 @@ class TableListFragment: Fragment() {
         table_list.layoutManager = GridLayoutManager(activity, resources.getInteger(R.integer.table_columns))
 
         tables = Tables.tables
-
     }
 
     fun setRecyclerViewClickListener() {

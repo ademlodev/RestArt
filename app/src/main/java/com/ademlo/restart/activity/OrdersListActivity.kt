@@ -11,7 +11,6 @@ import com.ademlo.restart.fragment.OrderListFragment
 class OrdersListActivity : AppCompatActivity() {
 
     companion object {
-
         val EXTRA_TABLE_ID = "EXTRA_TABLE_ID"
 
         fun intent(context: Context, tableId: String): Intent {

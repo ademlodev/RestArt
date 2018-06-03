@@ -45,7 +45,14 @@ object Tables {
             table?.dishes = mutableListOf()
         }
         table?.dishes?.add(dish)
-
+    }
+    fun removeOrder(id: String){
+        val table: Table? = getTableById(id)
+        if (table?.dishes?.size  == 1){
+            table?.dishes = null
+        }else {
+            table?.dishes?.dropLast(1)
+        }
     }
 
     fun toArray() = tables.toTypedArray()

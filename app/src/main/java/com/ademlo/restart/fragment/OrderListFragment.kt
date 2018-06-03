@@ -1,29 +1,25 @@
 package com.ademlo.restart.fragment
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.GridLayoutManager
 import android.view.*
-
 import com.ademlo.restart.R
 import com.ademlo.restart.activity.DishDetailActivity
 import com.ademlo.restart.activity.DishListActivity
 import com.ademlo.restart.adapter.OrderAdapter
 import com.ademlo.restart.model.Dish
 import com.ademlo.restart.model.Dishes
-import com.ademlo.restart.model.Table
 import com.ademlo.restart.model.Tables
 import kotlinx.android.synthetic.main.fragment_order_list.*
 
 class OrderListFragment : Fragment() {
 
     companion object {
-
         val ARG_TABLE = "ARG_TABLE"
         val DISH_LIST_REQUEST = 1
 
@@ -85,7 +81,6 @@ class OrderListFragment : Fragment() {
         }else{
             order_list.visibility = View.GONE
         }
-
     }
 
     fun setRecyclerViewClickListener() {
@@ -113,7 +108,6 @@ class OrderListFragment : Fragment() {
 
                     val dishId = data.getIntExtra(DishListActivity.EXTRA_DISH_ID, 0)
                     val dish = Dishes.getDishById(dishId)
-                    /*val initialTableId = arguments?.getString(ARG_TABLE)*/
                     if (dish != null) {
 
                         Tables.setOrder(tableId!!, dish)
@@ -122,12 +116,24 @@ class OrderListFragment : Fragment() {
                         if (orderListFragment != null) {
                             orderListFragment.updateOrders(tableId)
                         }
+
+                        //Meter SnackBar informativo y para poder deshacer
+                        Snackbar.make(view!!, getString(R.string.snackbar_add_dish), Snackbar.LENGTH_LONG)
+                                .setAction(getString(R.string.undo)) {
+                                    Tables.removeOrder(tableId!!)
+
+                                    val orderListFragment = fragmentManager?.findFragmentById(R.id.order_list_fragment) as OrderListFragment
+                                    if (orderListFragment != null) {
+                                        orderListFragment.updateOrders(tableId)
+                                    }
+                                }
+                                .show()
+
                     }
 
-                    //TODO Meter SnackBar informativo y para poder deshacer
                 }
                 else {
-                    //TODO No se ha seleccionado nada. Insertar mensaje Toast?
+                    // No se ha seleccionado nada. Insertar mensaje Toast?
                 }
             }
         }

@@ -36,7 +36,6 @@ class DishAdapter: RecyclerView.Adapter<DishAdapter.DishViewHolder> {
         holder.dish = items[position]
     }
 
-
     inner class DishViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         var dish: Dish? = null
             set(value) {
