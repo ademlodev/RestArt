@@ -10,57 +10,32 @@ import com.ademlo.restart.R
 import com.ademlo.restart.model.Table
 import kotlinx.android.synthetic.main.activity_tables_list.view.*
 
-class TableAdapter: RecyclerView.Adapter<TableAdapter.TableViewHolder> {
+class TableAdapter(private var items : List<Table>): RecyclerView.Adapter<TableAdapter.TableViewHolder>() {
 
-    constructor(): super(){
-        itemClickListener = null
-    }
-
-    constructor(itemClickListener: ((Table, Int) -> Unit)): super(){
-        this.itemClickListener = itemClickListener
-    }
-
-    private var items = mutableListOf<Table>()
-    private val itemClickListener: ((Table, Int) -> Unit)?
+    var onClickListener: View.OnClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TableViewHolder {
-        val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_table,parent,false)
-
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_table,parent,false)
+        // Le decimos a este view que cuando lo pulsen avise a nuestro onClickListener
+        view.setOnClickListener {
+            onClickListener?.onClick(it)
+        }
         return TableViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    override fun getItemCount()= items.size
 
     override fun onBindViewHolder(holder: TableViewHolder, position: Int) {
-        holder.table = items[position]
-    }
-
-    fun setTables(tables: MutableList<Table>){
-        items.clear()
-        items.addAll(tables)
-
+        holder.bindTable(items[position])
     }
 
     inner class TableViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
-        var table: Table? = null
-            set(value) {
-                itemView.findViewById<TextView>(R.id.label_table_name).text = value?.name
+        var nameTableText = itemView.findViewById<TextView>(R.id.label_table_name)
 
-                field = value
-            }
-
-        init {
-            itemView.setOnClickListener {
-                table?.let {
-                    itemClickListener?.invoke(table as Table,adapterPosition)
-                }
-            }
+        fun bindTable(table: Table) {
+            // Actualizamos la vista con el modelo
+            nameTableText?.text = table.name
         }
-
-
     }
 }

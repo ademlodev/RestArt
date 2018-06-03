@@ -1,48 +1,41 @@
 package com.ademlo.restart.activity
 
-import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
+import android.view.ViewGroup
 import com.ademlo.restart.R
-import com.ademlo.restart.adapter.TableAdapter
-import com.ademlo.restart.model.Table
+import com.ademlo.restart.fragment.OrderListFragment
+import com.ademlo.restart.fragment.TableListFragment
 import com.ademlo.restart.model.Tables
 
 class TablesListActivity : AppCompatActivity() {
-
-    val EXTRA_TABLE_INDEX = "EXTRA_TABLE_INDEX"
-
-    val tableList: RecyclerView by lazy {
-        val list: RecyclerView = findViewById(R.id.table_list)
-        list.layoutManager = LinearLayoutManager(this)
-
-        list
-    }
-
-    val tableAdapter: TableAdapter by lazy {
-        val adapter = TableAdapter{ item, position ->
-            showOrderList(item.id)
-        }
-        adapter
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tables_list)
 
-        tableList.adapter = tableAdapter
+        if(findViewById<ViewGroup>(R.id.table_list_fragment) != null){
+            if (supportFragmentManager.findFragmentById(R.id.table_list_fragment) == null) {
+                val table_list_fragment: TableListFragment = TableListFragment.newInstance()
 
-        val tables: MutableList<Table> = Tables.tables
-        tableAdapter.setTables(tables)
+                supportFragmentManager.beginTransaction()
+                        .add(R.id.table_list_fragment, table_list_fragment)
+                        .commit()
+            }
+        }
 
+        if(findViewById<ViewGroup>(R.id.order_list_fragment) != null){
+            if (supportFragmentManager.findFragmentById(R.id.order_list_fragment) == null) {
+                //Selecciono la primera mesa
+                val initialTableId :String = Tables.tables[0].id
+                val order_list_fragment: Fragment = OrderListFragment.newInstance(initialTableId)
+
+                supportFragmentManager.beginTransaction()
+                        .add(R.id.order_list_fragment, order_list_fragment)
+                        .commit()
+            }
+        }
     }
-
-    fun showOrderList(tableId: String){
-        val intent: Intent  = Intent(this,OrdersListActivity::class.java)
-        intent.putExtra(EXTRA_TABLE_INDEX,tableId)
-        startActivity(intent)
-    }
-
 }
+

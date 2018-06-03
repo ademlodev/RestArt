@@ -31,6 +31,10 @@ object Tables {
             it.id == id
         }
     }
+
+    fun getTable(index: Int): Table{
+        return Tables.tables[index]
+    }
     fun getOrder(id: String): MutableList<Dish>?{
         val table = getTableById(id)
         return table?.dishes

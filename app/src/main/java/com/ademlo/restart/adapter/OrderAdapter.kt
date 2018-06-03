@@ -7,54 +7,42 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.ademlo.restart.R
 import com.ademlo.restart.model.Dish
+import com.ademlo.restart.model.Table
 
-class OrderAdapter: RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
+class OrderAdapter(private var items : MutableList<Dish>): RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
 
-    constructor(): super(){
-        itemClickListener = null
-    }
-
-    constructor(itemClickListener: ((Dish, Int) -> Unit)): super(){
-        this.itemClickListener = itemClickListener
-    }
-
-    private var items = mutableListOf<Dish>()
-    private val itemClickListener: ((Dish, Int) -> Unit)?
+    var onClickListener: View.OnClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder{
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_order,parent,false)
-
+        view.setOnClickListener {
+            onClickListener?.onClick(it)
+        }
         return OrderViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    override fun getItemCount()= items.size
 
     override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
-        holder.order = items[position]
+        holder.bindOrder(items[position])
     }
 
-    fun setOrders(orders: MutableList<Dish>){
-        items.clear()
-        items.addAll(orders)
-
-    }
+    /* En landscape no he averiguado como actualizar la lista de la derecha
+    fun setOrders(orders: List<Dish>?){
+        if (orders != null) {
+            items.clear()
+            items.addAll(orders)
+        }else
+            items.clear()
+        notifyDataSetChanged()
+    }*/
 
     inner class OrderViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        var order: Dish? = null
-            set(value) {
-                itemView.findViewById<TextView>(R.id.label_order_name).text = value?.name
+        var nameOrderText = itemView.findViewById<TextView>(R.id.label_order_name)
 
-                field = value
-            }
-
-        init {
-            itemView.setOnClickListener {
-                order?.let {
-                    itemClickListener?.invoke(order as Dish,adapterPosition)
-                }
-            }
+        fun bindOrder(order: Dish) {
+            // Actualizamos la vista con el modelo
+            nameOrderText?.text = order.name
         }
     }
 }
